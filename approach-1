@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+#include<string.h>
+#include<vector>
+#include<set>
+#include<map>
+#include<stack>
+#include<queue>
+#define endl  "\n"
+#define ll long long
+#define int long long
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cin.exceptions(cin.failbit);cout.tie(NULL);
+using namespace std;
+
+int32_t main()
+{
+	
+	int Xa,Ya,Xb,Yb; // coordinates of X and Y
+	cin >> Xa >> Ya >> Xb >> Yb;  // taking input
+	
+	
+	int k;    // total no. of vectors 
+	cin >> k;
+	vector<pair<int,int> > v(k);
+	
+	for(int i=0;i<k;i++)
+	{
+		int x,y;   // taking input of k vectors.
+		v.push_back({x,y}); 
+	}
+	
+	int reqdx = (Xb-Xa);   // Required sum of B-A in x-coordinate
+	int reqdy = (Yb-Ya);   // Required sum of B-A in y-coordinate
+	
+	for(int i=0;i<(int)pow(2,k);i++)    // For generating all 2^k combinations
+	{
+		int sumx=0,sumy=0;    					// initailising sumx as 0,sumy as 0
+		int cnt=0,x=i;                  // initailizing another variable x = i
+		while(x>0)							
+		{
+			if((x&1)==1)
+			{
+				sumx+=v[cnt].first;				// adding Xvalue in sumx for particular set bit in x
+				sumy+=v[cnt].second;			// adding Yvalue in sumy for particular set bit in y
+			}
+			cnt++;
+			x=x/2;
+		}
+		
+		if(reqdx==sumx && reqdy==sumy)          // checking condition
+		{
+			x=i;
+			cnt=0;
+			while(x>0)
+			{
+				if((x&1)==1)
+				{
+					cout << v[cnt].first << " " << v[cnt].second << endl;  // printing subset of vectors
+				}
+				
+				cnt++;
+				x=x/2;
+			}
+		}
+	}	
+}
+
+
