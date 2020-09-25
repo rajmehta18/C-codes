@@ -10,59 +10,50 @@
 #define int long long
 #define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cin.exceptions(cin.failbit);cout.tie(NULL);
 using namespace std;
-bool isPrime(int n)
-{
-    if (n <= 1)
-        return false;
-    if (n <= 3)
-        return true;
-    if (n % 2 == 0 || n % 3 == 0)
-        return false;
-    for (int i = 5; i * i <= n; i += 6)
-    {
-        if ((n % i == 0) || (n % (i + 2) == 0))
-            return false;
-    }
-    return true;
-}
+
 int n,r;
-int a[100050];
-	
-void recur(int i,vector<int> v)
+vector<pair<int,int> > v;	
+
+void recur(int i,vector<pair<int,int> > temp)
 {
-	if(i>n)
+	if(i>n)      // base case
 	{
 		return ;
 	}
-	if(v.size()>r)
+	if(temp.size()>r) // base case
 	{
 		return ;
 	}	
-	if(v.size()==r)
+	if(temp.size()==r) // base case
 	{
-		for(int i=0;i<v.size();i++)
+		for(int i=0;i<temp.size();i++)  // printing susbet
 		{
-			cout << v[i] << " ";
+			cout << temp[i].first << " " << temp[i].second << endl;
 		}
 		cout << endl;
 		return ;
 	}
-	
-	recur(i+1,v);
-	v.push_back(a[i]);
-	recur(i+1,v);
+
+	recur(i+1,temp); //recursion call  for exclusion
+	temp.push_back({v[i].first,v[i].second}); 
+	recur(i+1,temp); // recursion call for inclusion
 	
 	return;
 }	
 
 int32_t main()
 {
-	cin >> n >> r;
+						 // most of the variables are taken in global scope for simplicity.
+	cin >> n >> r;       // n here is same as k,in our question and r here is same as C in our question
 	for(int i=0;i<n;i++)
-	cin >> a[i];
+	{
+		int x,y;
+		cin >>  x >> y;
+		v.push_back({x,y});
+	}
 	
-	vector<int> v;
-	recur(0,v);
+	vector<pair<int,int> > temp;
+	recur(0,temp); // recursion call.
 	
 }
 
